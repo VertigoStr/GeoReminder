@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GeoReminder</string>
+    <string name="title_activity_maps">GeoReminder</string>
+    <string name="getMyPosition">getMyPosition</string>
+    <string name="tap_marker">Нажмите на синий маркер</string>
+    <string name="add_to_favorite">Путь успешно добавлен в избранное</string>
+    <string name="confirm_your_choice">Подтвердите свой выбор</string>
+    <string name="go_there">Вы собираетесь отправиться туда?</string>
+    <string name="yes">Да</string>
+    <string name="no">Нет</string>
+    <string name="add_favorite">Добавить в избранное</string>
+    <string name="enter_name">Введите название маршрута</string>
+    <string name="cancel">Отмена</string>
+    <string name="properties">Свойства</string>
+    <string name="delete">Удалить</string>
+    <string name="rename">Переименовать</string>
+    <string name="enter_new_name">Введите новое название</string>
+    <string name="ok">ОК</string>
+    <string name="we_have_come">Подъем!Мы прибыли!</string>
+    <string name="vibration">Вибрация</string>
+    <string name="select_ringtone">Мелодия</string>
+    <string name="language">Язык</string>
+    <string name="favorite">Избранное</string>
+    <string name="setting">Настройки</string>
+    <string name="lang_dialog">Выберите язык:</string>
+    <string name="lang_end">Язык приложения.\nНеобходимо перезапустить приложение для принятия изменений.</string>
+    <string name="gps_dismissed">Потеряна связь со спутником!</string>
+    <string name="task_started">Путешествие уже начато!</string>
+    <string name="cancel_task">Вы действительно хотите отменить задание?</string>
+    <string name="search_smth">Что искать?</string>
+    <string name="new_task">Задать новый маршрут?</string>
+    <string name="from_favorite">Выбрать из избранного</string>
+    <string name="new_new">Создать новый</string>
+    <string name="task_not_ended">Путешествие не окончено. Отмените текущее путешествие, чтобы продолжить</string>
+    <string name="task_not_started">Путешествие еще не начато!</string>
+    <string name="exit">Выход: Вы уверены?</string>
+    <string name="gps_problem">Отсутствует связь со спутником!</string>
+    <string name="address">Адрес: </string>
+    <string name="get_addres_location_problem">Неизвестный адресс</string>
+    <string name="distance">Расстояние: </string>
+    <string name="duration">Возможное время прибытия: </string>
+    <string name="gps_start_problem">Настройки GPS</string>
+    <string name="gps_settings">Отсутствует связь со спутником. Перейдем к настройкам GPS?</string>
+    <string name="start_gps_settings">Настройки</string>
+    <string name="start_task">Начать путешествие</string>
+    <string name="cancel_running_task">Отменить путешествие</string>
+    <string name="some_mistake">Что-то пошло не так. Перезапустите приложение</string>
+    <string name="calcul">Расчет маршрута</string>
+    <string-array name="entries_lang">
+        <item>По умолчанию</item>
+        <item>Английский</item>
+        <item>Русский</item>
+    </string-array>
+    <string-array name="entry_values_lang">
+        <item>default</item>
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+    <string name="wake_up_radius">Дистанция для оповещения</string>
+    <string name="wake_up_end">Необходимо перезапустить приложение для принятия изменений.</string>
+    <string name="choose_radius">Выберите расстояние:</string>
+    <string-array name="entries_radius">
+        <item>250м</item>
+        <item>500м</item>
+        <item>1000м</item>
+        <item>2000м</item>
+        <item>3000м</item>
+        <item>4000м</item>
+    </string-array>
+    <string-array name="entry_values_radius">
+        <item>250</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+    </string-array>
+    <string name="map_type_st">Тип карты</string>
+    <string name="map_type_end">Необходимо перезапустить приложение для принятия изменений.</string>
+    <string name="choose_map_type">Выберите тип карты:</string>
+    <string-array name="entries_map">
+        <item>Нормальная</item>
+        <item>Гибридная</item>
+    </string-array>
+    <string-array name="entry_values_map">
+        <item>MAP_TYPE_NORMAL</item>
+        <item>MAP_TYPE_HYBRID</item>
+    </string-array>
+
+
+</resources>

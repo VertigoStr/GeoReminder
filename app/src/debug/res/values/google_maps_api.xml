@@ -1,0 +1,6 @@
+<resources>
+        <!--string name="google_maps_key_instructions" templateMergeStrategy="replace"></string-->
+
+    <string name="google_maps_key" templateMergeStrategy="preserve">AIzaSyA_DUHwTUkmBoy1v2PmAABLVA2ou0KVZxg
+        <!--AIzaSyD4aYObYScfi7xvENFql88843qlM2gIgx0--></string>
+</resources>

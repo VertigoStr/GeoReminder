@@ -1,0 +1,92 @@
+<resources>
+
+    <string name="add_favorite">Add Favorite</string>
+    <string name="add_to_favorite">The route has been added to favorite</string>
+    <string name="app_name">GeoReminder</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm_your_choice">Confirm your choice</string>
+    <string name="delete">Delete</string>
+    <string name="enter_name">Enter name</string>
+    <string name="enter_new_name">Enter new name</string>
+    <string name="getMyPosition">getMyPosition</string>
+    <string name="go_there">Do you want to go there?</string>
+    <string name="language">Language</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="properties">Properties</string>
+    <string name="rename">Rename</string>
+    <string name="select_ringtone">Ringtone</string>
+    <string name="tap_marker">Tap blue marker</string>
+    <string name="title_activity_maps">GeoReminder</string>
+    <string name="vibration">Vibration</string>
+    <string name="we_have_come">Wake Up!</string>
+    <string name="yes">Yes</string>
+    <string name="favorite">Favorites</string>
+    <string name="setting">Settings</string>
+    <string name="lang_dialog">choose a language:</string>
+    <string name="lang_end">Language.\nYou must restart the application to accept the changes.</string>
+    <string name="gps_dismissed">Lost contact with the GPS!</string>
+    <string name="task_started">Travel task has already started!</string>
+    <string name="cancel_task">Do you really want to cancel?</string>
+    <string name="search_smth">Search</string>
+    <string name="new_task">Make a new route?</string>
+    <string name="from_favorite">From favorite</string>
+    <string name="new_new">Make new</string>
+    <string name="task_not_ended">Travel task don\'t ended. Cancel the current travel task to continue</string>
+    <string name="task_not_started">Travel task hasn\'t started yet!</string>
+    <string name="exit">Exit: are you sure?</string>
+    <string name="gps_problem">GPS isn\'t available</string>
+    <string name="address">Address: </string>
+    <string name="get_addres_location_problem">Unable to get location for this address</string>
+    <string name="distance">Distance: </string>
+    <string name="duration">Duration: </string>
+    <string name="gps_start_problem">GPS settings</string>
+    <string name="gps_settings">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="start_gps_settings">Settings</string>
+    <string name="start_task">Start task</string>
+    <string name="cancel_running_task">Cancel task</string>
+    <string name="some_mistake">Something went wrong. Restart the application</string>
+    <string name="calcul">Calculation route</string>
+    <string-array name="entries_lang">
+        <item>default</item>
+        <item>English</item>
+        <item>Russian</item>
+    </string-array>
+    <string-array name="entry_values_lang">
+        <item>default</item>
+        <item>en</item>
+        <item>ru</item>
+    </string-array>
+    <string name="wake_up_radius">Minimum range for alarm</string>
+    <string name="wake_up_end">You must restart the application to accept the changes.</string>
+    <string name="choose_radius">Choose distance:</string>
+    <string-array name="entries_radius">
+        <item>250m</item>
+        <item>500m</item>
+        <item>1000m</item>
+        <item>2000m</item>
+        <item>3000m</item>
+        <item>4000m</item>
+    </string-array>
+    <string-array name="entry_values_radius">
+        <item>250</item>
+        <item>500</item>
+        <item>1000</item>
+        <item>2000</item>
+        <item>3000</item>
+        <item>4000</item>
+    </string-array>
+    <string name="map_type_st">Type of map</string>
+    <string name="map_type_end">You must restart the application to accept the changes.</string>
+    <string name="choose_map_type">Choose type of map:</string>
+    <string-array name="entries_map">
+        <item>Normal</item>
+        <item>Hybrid</item>
+    </string-array>
+    <string-array name="entry_values_map">
+        <item>MAP_TYPE_NORMAL</item>
+        <item>MAP_TYPE_HYBRID</item>
+    </string-array>
+
+
+</resources>
