@@ -1,1 +1,1 @@
-There is a simplest location alarm.
+There is a simplest location alarm for android.
