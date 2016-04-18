@@ -36,6 +36,7 @@ import com.example.mapexample.Activities.DocumentInfo;
 import com.example.mapexample.Activities.FavoriteList;
 import com.example.mapexample.Activities.Settings;
 import com.example.mapexample.Alarm.AlarmService;
+import com.example.mapexample.DBHelper.Routes;
 import com.example.mapexample.GPS.DistanceTask;
 import com.example.mapexample.GPS.DownloadTask;
 import com.example.mapexample.GPS.GetLocation;
@@ -50,8 +51,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Locale;
 import java.util.concurrent.ExecutionException;
-
-import static com.example.mapexample.DataBase.Controller.write;
 
 public class MapsActivity extends FragmentActivity {
 
@@ -253,18 +252,9 @@ public class MapsActivity extends FragmentActivity {
         alert.setView(input);
         alert.setPositiveButton(res.getString(R.string.ok), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
-                Log.d(tag, "input value" + input.getText().toString());
                 String value = input.getText().toString().isEmpty() ? "new route" : input.getText().toString();
-                Log.d(tag, "value " + value);
-                Double stLat = start.latitude;
-                Double stLon = start.longitude;
-                Double eLat = end.latitude;
-                Double eLon = end.longitude;
-                write(getBaseContext(), '"' + value + '"',
-                        '"' + stLat.toString() + '"',
-                        '"' + stLon.toString() + '"',
-                        '"' + eLat.toString() + '"',
-                        '"' + eLon.toString() + '"');
+                Routes route = new Routes(getBaseContext());
+                route.insert(route.getMaxIdValue() + 1, value, start.latitude, start.longitude, end.latitude, end.longitude);
                 Toast.makeText(context,
                         res.getString(R.string.add_to_favorite), Toast.LENGTH_LONG).show();
             }

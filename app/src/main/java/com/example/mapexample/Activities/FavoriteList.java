@@ -5,25 +5,23 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.provider.BaseColumns;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-import com.example.mapexample.DataBase.Controller;
-import com.example.mapexample.DataBase.DataBaseHelper;
-import com.example.mapexample.DataBase.Elements;
+import com.example.mapexample.DBHelper.Routes;
 import com.example.mapexample.R;
+import com.example.mapexample.Utils.Param;
+
+import java.util.ArrayList;
 
 public class FavoriteList extends Activity {
     private final static String tag = "favorite_list";
@@ -35,14 +33,16 @@ public class FavoriteList extends Activity {
         super.onCreate(savedInstanceState);
         Log.d(tag, "onCreate");
         setContentView(R.layout.favorite_list_view);
-        DataBaseHelper dbhelper = new DataBaseHelper(getBaseContext());
-        SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-        final String[] from = { Elements.Element.ElementColumns.Name, BaseColumns._ID };
-        final Cursor c = sqliteDB.query(Elements.Element.TABLE_NAME, null, null, null, null, null,
-               Elements.Element.DEFAULT_SORT);
-        final int[] to = new int[] { R.id.text1 };
-        final SimpleCursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.list,
-                c, from, to);
+
+        ArrayList<ArrayList<String>> list = new Routes(getBaseContext()).select(Routes.Name + ", " + Routes.id, null, null, Routes.id, "asc");
+        ArrayList<Param> vals = new ArrayList<Param>();
+        for(ArrayList<String> c : list) {
+            vals.add(new Param(Integer.parseInt(c.get(1)), c.get(0)));
+        }
+
+        final ArrayAdapter<Param> adapter = new ArrayAdapter<Param>(this,
+                android.R.layout.simple_list_item_1, vals);
+
         final ListView lv = (ListView) findViewById(R.id.listView1);
         lv.setAdapter(adapter);
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -54,44 +54,23 @@ public class FavoriteList extends Activity {
                         .getSystemService(LOCATION_SERVICE);
                 TelephonyManager telephonyManager = (TelephonyManager) context
                         .getSystemService(Context.TELEPHONY_SERVICE);
-                Boolean isEnabled;
-                if(telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED){
-                    isEnabled = true;
-                }else{
-                    isEnabled = false;
-                }
+                Boolean isEnabled = telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED;
                 isGPSEnabled = locationManager
                         .isProviderEnabled(LocationManager.GPS_PROVIDER);
                 if (isEnabled && isGPSEnabled) {
-                    DataBaseHelper dbhelper = new DataBaseHelper(getBaseContext());
-                    SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-                    Cursor c = sqliteDB.query(Elements.Element.TABLE_NAME, null, BaseColumns._ID + "=" + id, null, null, null,
-                            null);
-                    String stLat = "";
-                    String stLon = "";
-                    String eLat = "";
-                    String eLon = "";
-                    if (c.moveToFirst()) {
-                        stLat = c.getString(c.getColumnIndex(Elements.Element.ElementColumns.startLatitude));
-                        stLon = c.getString(c.getColumnIndex(Elements.Element.ElementColumns.startLongitude));
-                        eLat = c.getString(c.getColumnIndex(Elements.Element.ElementColumns.endLatitude));
-                        eLon = c.getString(c.getColumnIndex(Elements.Element.ElementColumns.endLongitude));
-                    }
-                    dbhelper.close();
-                    sqliteDB.close();
+                    ArrayList<ArrayList<String>> c = new Routes(getBaseContext()).select(null, Routes.id, id + "", Routes.id, "asc");
                     Intent intent = new Intent();
                     intent.putExtra("DocumentInfo", new DocumentInfo(
-                                    Double.parseDouble(stLat),
-                                    Double.parseDouble(stLon),
-                                    Double.parseDouble(eLat),
-                                    Double.parseDouble(eLon),
+                                    Double.parseDouble(c.get(0).get(2)),
+                                    Double.parseDouble(c.get(0).get(3)),
+                                    Double.parseDouble(c.get(0).get(4)),
+                                    Double.parseDouble(c.get(0).get(5)),
                                     "0")
                     );
                     Log.d(tag, intent.toString());
                     setResult(Activity.RESULT_OK, intent);
                     finish();
-                }
-                else{
+                } else {
                     Toast.makeText(getApplicationContext(), getResources().
                             getString(R.string.gps_problem), Toast.LENGTH_LONG).show();
                 }
@@ -102,7 +81,7 @@ public class FavoriteList extends Activity {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1, final int pos, long id) {
                 Log.d(tag, "item_long_click");
-                final CharSequence[] items = { getResources().getString(R.string.delete), getResources().getString(R.string.rename) };
+                final CharSequence[] items = {getResources().getString(R.string.delete), getResources().getString(R.string.rename)};
                 AlertDialog.Builder builder3 = new AlertDialog.Builder(FavoriteList.this);
                 builder3.setTitle(getResources().getString(R.string.enter_new_name)).setItems(items,
                         new DialogInterface.OnClickListener() {
@@ -112,14 +91,9 @@ public class FavoriteList extends Activity {
 
                                 switch (item) {
                                     case 0: {
-                                        DataBaseHelper dbhelper = new DataBaseHelper(getBaseContext());
-                                        SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-                                        Controller.delete(getBaseContext(), adapter.getItemId(pos));
-                                        final Cursor c = sqliteDB.query(Elements.Element.TABLE_NAME, null, null, null, null, null,
-                                                Elements.Element.DEFAULT_SORT);
-                                        adapter.changeCursor(c);
-                                        dbhelper.close();
-                                        sqliteDB.close();
+                                        Routes route = new Routes(getBaseContext());
+                                        route.delete(Routes.id, adapter.getItem(pos).getId() + "");
+                                        adapter.remove(adapter.getItem(pos));
                                     }
                                     break;
                                     case 1: {
@@ -135,16 +109,21 @@ public class FavoriteList extends Activity {
 
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int id) {
-
-                                                        DataBaseHelper dbhelper = new DataBaseHelper(getBaseContext());
-                                                        SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
-                                                        Controller.update(getBaseContext(), userInput
-                                                                .getText().toString(), adapter.getItemId(pos));
-                                                        final Cursor c = sqliteDB.query(Elements.Element.TABLE_NAME, null, null, null, null, null,
-                                                                Elements.Element.DEFAULT_SORT);
-                                                        adapter.changeCursor(c);
-                                                        dbhelper.close();
-                                                        sqliteDB.close();
+                                                        Log.d("update", adapter.getItemId(pos) + "");
+                                                        Routes route = new Routes(getBaseContext());
+                                                        route.update(
+                                                                Routes.Name,
+                                                                userInput.getText().toString(),
+                                                                Routes.id,
+                                                                adapter.getItem(pos).getId() + ""
+                                                        );
+                                                        ArrayList<ArrayList<String>> list = new Routes(getBaseContext()).select(Routes.Name + ", " + Routes.id, null, null, Routes.id, "asc");
+                                                        ArrayList<Param> vals = new ArrayList<Param>();
+                                                        for(ArrayList<String> c : list) {
+                                                            vals.add(new Param(Integer.parseInt(c.get(1)), c.get(0)));
+                                                        }
+                                                        adapter.clear();
+                                                        adapter.addAll(vals);
                                                     }
                                                 }).setNegativeButton(getResources().getString(R.string.cancel),
                                                 new DialogInterface.OnClickListener() {
@@ -166,7 +145,5 @@ public class FavoriteList extends Activity {
                 return true;
             }
         });
-        dbhelper.close();
-        sqliteDB.close();
     }
 }
