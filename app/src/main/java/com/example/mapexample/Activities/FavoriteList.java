@@ -58,7 +58,7 @@ public class FavoriteList extends Activity {
                 isGPSEnabled = locationManager
                         .isProviderEnabled(LocationManager.GPS_PROVIDER);
                 if (isEnabled && isGPSEnabled) {
-                    ArrayList<ArrayList<String>> c = new Routes(getBaseContext()).select(null, Routes.id, id + "", Routes.id, "asc");
+                    ArrayList<ArrayList<String>> c = new Routes(getBaseContext()).select(null, Routes.id, adapter.getItem(position).getId() + "", Routes.id, "asc");
                     Intent intent = new Intent();
                     intent.putExtra("DocumentInfo", new DocumentInfo(
                                     Double.parseDouble(c.get(0).get(2)),

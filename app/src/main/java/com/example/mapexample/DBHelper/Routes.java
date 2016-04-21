@@ -1,6 +1,7 @@
 package com.example.mapexample.DBHelper;
 
 import android.content.Context;
+
 import java.util.ArrayList;
 
 public class Routes extends DBHelperController {
@@ -18,12 +19,26 @@ public class Routes extends DBHelperController {
 	}
 
     public int getMaxIdValue() {
-        return Integer.parseInt(super.executeQuery(context, "SELECT max(id) FROM " + TABLE_NAME).get(0).get(0));
+		String val = super.executeQuery(context, "SELECT max(id) FROM " + TABLE_NAME).get(0).get(0);
+        return val == null ? 0 : Integer.parseInt(val);
     }
 
 	public void insert(Integer id, String Name, Double start_lat, Double start_lon, Double end_lat, Double end_lon) {
-        Name = "\"" + Name + "\"";
-		super.execute(context, "INSERT INTO " + TABLE_NAME + " values(" + id + ", " + Name + ", " + start_lat + ", " + start_lon + ", " + end_lat + ", " + end_lon + ");");
+		Name = Name != null ? "\"" + Name + "\"" : null;
+
+		Object[] values_ar = {id, Name, start_lat, start_lon, end_lat, end_lon};
+		String[] fields_ar = {Routes.id, Routes.Name, Routes.start_lat, Routes.start_lon, Routes.end_lat, Routes.end_lon};
+		String values = "", fields = "";
+
+		for (int i = 0; i < values_ar.length; i++) {
+			values += values_ar[i] == null ? "" : values_ar[i] + ", ";
+			fields += values_ar[i] == null ? "" : fields_ar[i] + ", ";
+		}
+
+		values = values.substring(0, values.length() - 2);
+		fields = fields.substring(0, fields.length() - 2);
+
+		super.execute(context, "INSERT INTO " + TABLE_NAME + "(" + fields + ") values(" + values + ");");
 	}
 
 	public void delete(String whatField, String whatValue) {
