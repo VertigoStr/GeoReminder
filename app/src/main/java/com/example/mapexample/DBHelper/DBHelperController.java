@@ -35,25 +35,26 @@ public class DBHelperController {
 	}
 
 	protected ArrayList<ArrayList<String>> executeQuery(Context context, String query) {
-        ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
+		ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
 		DBHelper dbhelper = new DBHelper(context);
 		SQLiteDatabase sqliteDB = dbhelper.getReadableDatabase();
 		Cursor c = sqliteDB.rawQuery(query, null);
-        if (c.moveToFirst()) {
-            do {
-                ArrayList<String> subList = new ArrayList<String>();
-                for (int i = 0; i < c.getColumnCount(); i++) {
-                    subList.add(c.getString(i));
-                }
-                list.add(subList);
-            } while (c.moveToNext());
-        } else {
-            Log.d(TAG, "0 rows");
-        }
-        c.close();
+		if (c.moveToFirst()) {
+			do {
+				ArrayList<String> subList = new ArrayList<String>();
+				for (int i = 0; i < c.getColumnCount(); i++) {
+					subList.add(c.getString(i));
+				}
+				list.add(subList);
+			} while (c.moveToNext());
+		} else {
+			Log.d(TAG, "0 rows");
+		}
+		c.close();
 		sqliteDB.close();
 		dbhelper.close();
 		return list;
 	}
+
 
 }
